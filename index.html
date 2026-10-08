@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>INNDEAVOR · Codex 实战挑战</title>
+<style>
+:root{--ink:#112b3c;--deep:#0b2230;--paper:#eaf4f4;--cyan:#63c8d0;--orange:#ff875f;--muted:#88a7b3;--line:rgba(170,215,223,.18);--body:"Microsoft YaHei","PingFang SC",sans-serif;--display:"Bahnschrift","Microsoft YaHei",sans-serif;--mono:"Consolas",monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--paper);background:var(--deep);font-family:var(--body);font-size:14px;line-height:1.7}button,a,input{touch-action:manipulation}button{font:inherit;cursor:pointer}a{color:inherit}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--orange);outline-offset:5px}button:disabled{cursor:default}svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}p,h1,h2,h3,h4{margin:0}button{color:inherit}::selection{color:var(--deep);background:var(--cyan)}[hidden]{display:none!important}
+.frame{max-width:1540px;margin:auto;padding:0 64px}.top{height:90px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{font:700 24px var(--display);letter-spacing:3px;display:flex;align-items:center;gap:14px}.brand-mark{display:flex;gap:4px;transform:skew(-15deg)}.brand-mark i{width:5px;height:23px;background:var(--paper)}.brand-mark i:nth-child(2){height:17px;background:var(--cyan)}.brand-mark i:last-child{height:11px;background:var(--orange)}.brand-sub{border-left:1px solid var(--line);padding-left:20px;margin-left:10px;font:12px var(--mono);letter-spacing:2px;color:var(--muted)}.top-right{display:flex;align-items:center;gap:24px;color:var(--muted);font-size:12px}.tag{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);padding:5px 11px;border-radius:100px}.dot{height:6px;width:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px rgba(99,200,208,.5)}.text-link{display:flex;align-items:center;gap:6px;text-decoration:none}.text-link:hover{color:var(--paper)}
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:36px;padding:72px 0 70px;align-items:center;position:relative}.hero:before{content:"";position:absolute;width:500px;height:420px;right:0;top:0;background:radial-gradient(ellipse,rgba(99,200,208,.11),transparent 68%);pointer-events:none}.eyebrow{font:12px var(--mono);letter-spacing:3px;color:var(--cyan);display:flex;align-items:center;gap:12px}.eyebrow:before{content:"";width:28px;height:1px;background:var(--cyan)}h1{font:600 clamp(44px,4.3vw,72px)/1.15 var(--display);letter-spacing:-2px;margin:23px 0 24px}h1 span{color:var(--orange)}.hero-desc{color:#b3c9d0;font-size:15px;max-width:480px;line-height:1.9}.hero-actions{display:flex;gap:14px;margin-top:30px;align-items:center;flex-wrap:wrap}.btn{border:1px solid var(--line);border-radius:7px;background:transparent;padding:11px 17px;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;transition:background .2s,transform .2s}.btn:hover{background:rgba(99,200,208,.08);transform:translateY(-2px)}.btn-primary{background:var(--orange);border-color:var(--orange);color:var(--deep);font-weight:700}.btn-primary:hover{background:#ff9c7b}.btn-white{background:var(--paper);border-color:var(--paper);color:var(--deep);font-weight:700}.hero-notes{display:flex;gap:23px;margin-top:23px;color:var(--muted);font-size:12px}.hero-notes span{display:flex;align-items:center;gap:6px}.hero-notes svg{width:14px;height:14px}
+.pass-stage{position:relative;height:335px;display:flex;align-items:center;justify-content:center;perspective:1000px}.orbit{position:absolute;height:285px;width:430px;border:1px solid rgba(99,200,208,.13);border-radius:50%;transform:rotate(-23deg)}.orbit:after{content:"";position:absolute;left:40px;top:50px;width:7px;height:7px;background:var(--orange);border-radius:50%;box-shadow:0 0 18px var(--orange)}.orbit.second{transform:rotate(40deg);width:360px;height:300px}.pass{width:355px;min-height:264px;border:1px solid rgba(187,225,233,.4);border-radius:16px;padding:26px 28px;background:linear-gradient(130deg,rgba(177,229,232,.15),rgba(26,65,80,.6) 46%,rgba(99,200,208,.07));box-shadow:0 35px 65px rgba(0,0,0,.28),inset 0 0 25px rgba(99,200,208,.04);transform:rotate(-7deg);position:relative;overflow:hidden;animation:float 7s ease-in-out infinite;backdrop-filter:blur(12px)}.pass:after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.08) 45%,transparent 60%);pointer-events:none}.pass-top{display:flex;justify-content:space-between;font:10px var(--mono);letter-spacing:2px;color:#c1d8de}.pass-stamp{border:1px solid rgba(234,244,244,.3);padding:3px 7px;border-radius:4px}.pass-code{font:600 59px var(--display);letter-spacing:-2px;margin:30px 0 1px;line-height:1}.pass-title{font-size:14px;color:#c7dee2}.pass-bottom{display:flex;justify-content:space-between;align-items:end;border-top:1px solid var(--line);padding-top:15px;margin-top:24px}.pass-bottom small{font:10px var(--mono);letter-spacing:2px;color:var(--muted)}.bars{display:flex;align-items:center;height:27px;gap:3px}.bars i{height:100%;width:2px;background:#a9ced6}.bars i:nth-child(3n){width:5px}.bars i:nth-child(4n){height:70%}.float-label{position:absolute;right:5px;bottom:12px;display:flex;gap:10px;align-items:center;background:var(--paper);color:var(--ink);padding:13px 18px;border-radius:9px;box-shadow:0 12px 40px rgba(0,0,0,.2);font-size:12px;transform:rotate(2deg)}.float-label svg{color:#327582}.float-label strong{display:block;font-size:13px}.float-label small{font-size:11px;color:#5e7c87}@keyframes float{0%,100%{transform:translateY(0) rotate(-7deg)}50%{transform:translateY(-9px) rotate(-5deg)}}
+.section-top{display:flex;justify-content:space-between;gap:20px;align-items:end;padding-top:27px;border-top:1px solid var(--line);margin-bottom:26px}.section-top h2{font:500 27px var(--display);letter-spacing:-.5px}.section-top p{font-size:12px;color:var(--muted)}.lab{display:grid;grid-template-columns:244px minmax(0,1fr);gap:32px;scroll-margin-top:28px}.roles{display:flex;flex-direction:column;gap:12px}.role{background:transparent;border:1px solid var(--line);border-radius:10px;padding:19px;text-align:left;position:relative;transition:.2s;min-height:120px}.role:hover{border-color:#71929f;transform:translateX(3px)}.role[aria-pressed=true]{background:var(--paper);color:var(--ink);border-color:var(--paper)}.role-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}.role-top small{font:10px var(--mono);letter-spacing:1.5px;color:var(--muted)}.role[aria-pressed=true] small{color:#537884}.role-title{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:18px}.role-title svg{width:17px}.role p{font-size:11px;margin-top:3px;color:var(--muted)}.role[aria-pressed=true] p{color:#52717e}.side-tip{padding:20px 5px;font-size:12px;color:var(--muted)}.side-tip strong{color:#bfd6dc;font-size:12px;display:block;margin-bottom:5px}.side-tip .tiny-line{height:1px;width:35px;background:var(--orange);margin-bottom:16px}
+.mission{min-width:0}.mission-head{display:flex;justify-content:space-between;align-items:start;gap:20px;margin-bottom:19px}.mission-kicker{font:11px var(--mono);letter-spacing:2px;color:var(--orange);margin-bottom:8px}.mission-head h2{font:600 28px var(--display);margin-bottom:8px}.mission-desc{color:#b3c9d0;font-size:13px;max-width:680px}.mission-badge{white-space:nowrap;font:11px var(--mono);padding:6px 10px;border:1px solid var(--line);border-radius:5px;color:var(--muted);margin-top:5px}.mission-toolbar{display:flex;flex-wrap:wrap;gap:10px;margin:21px 0}.mission-toolbar .btn{font-size:12px;padding:9px 13px}.preview{border:1px solid #345360;border-radius:12px;overflow:hidden;background:#102a39}.preview-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 18px;border-bottom:1px solid var(--line);font-size:11px;color:#a4c2cd}.window-dots{display:flex;gap:5px;margin-right:12px}.window-dots i{height:6px;width:6px;border-radius:50%;background:#5e7c88}.window-dots i:first-child{background:var(--orange)}.window-label{display:flex;align-items:center;font:11px var(--mono);letter-spacing:1px}.preview-body{padding:25px}.preview-intro{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:12px}.preview-intro h3{font-size:18px;font-weight:600}.preview-intro p{font-size:11px;color:var(--muted);margin-top:4px}.preview-counter{font:12px var(--mono);color:var(--cyan);white-space:nowrap}.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}.filter{border:1px solid var(--line);border-radius:5px;padding:6px 12px;background:transparent;font-size:11px;min-height:34px}.filter[aria-pressed=true]{color:var(--deep);background:var(--cyan);border-color:var(--cyan)}.filter:hover{border-color:var(--cyan)}.record-list{display:grid;grid-template-columns:1fr 1fr;gap:12px}.record{background:rgba(234,244,244,.035);border:1px solid var(--line);padding:17px;border-radius:8px}.record:last-child:nth-child(odd){grid-column:1/-1}.record-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}.record h4{font-size:14px;font-weight:600}.status{font-size:10px;white-space:nowrap;padding:2px 7px;border-radius:4px;background:rgba(99,200,208,.1);color:#89d6dc}.status.done{background:rgba(179,218,193,.1);color:#b3dac1}.status.ask{background:rgba(255,135,95,.12);color:#ffad8f}.record p{color:#b5cbd2;font-size:12px;margin-bottom:13px;min-height:40px}.record-meta{display:flex;justify-content:space-between;gap:10px;color:#b0c7d0;font-size:11px;margin-bottom:10px}.record details{border-top:1px solid var(--line);padding-top:9px}.record summary{cursor:pointer;font-size:10px;color:#7fbdc9;min-height:24px}.record details div{font-size:11px;color:#b5cbd2;line-height:1.8;padding:9px 0 0}.source-label{font:10px var(--mono);color:var(--muted)}.preview-note{font-size:10px;color:var(--muted);display:flex;align-items:start;gap:6px;margin-top:17px}.preview-note svg{width:13px;height:13px;margin-top:3px}
+.below{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px}.panel{border:1px solid var(--line);border-radius:10px;padding:23px}.panel h3{font-size:15px;margin-bottom:14px;display:flex;align-items:center;gap:9px}.panel h3 svg{color:var(--cyan);width:17px}.requirements{padding:0;margin:0;list-style:none}.requirements li{display:flex;align-items:start;gap:10px;font-size:12px;color:#b9cdd4;margin:11px 0}.requirements li span{font:11px var(--mono);color:var(--orange);padding-top:3px}.review-points{padding:0;list-style:none;margin:0}.review-points li{font-size:12px;color:#b9cdd4;display:flex;align-items:start;gap:8px;margin:11px 0}.review-points svg{color:var(--cyan);width:14px;margin-top:2px}.boundary{margin-top:16px;padding:12px;border-radius:6px;background:rgba(255,135,95,.065);border-left:2px solid var(--orange);font-size:11px;color:#ffb69c}.progress-panel{margin-top:24px;border:1px solid var(--line);border-radius:10px;padding:23px}.progress-top{display:flex;justify-content:space-between;align-items:center;gap:12px}.progress-top h3{font-size:15px}.progress-value{font:11px var(--mono);color:var(--cyan)}.progress-track{height:3px;background:#274653;margin:17px 0 20px;overflow:hidden;border-radius:10px}.progress-bar{height:100%;background:var(--cyan);width:0;transition:width .3s}.checks{display:grid;grid-template-columns:1fr 1fr;gap:10px}.check{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:6px;padding:10px 12px;cursor:pointer;font-size:12px;color:#b7cdd5;min-height:45px}.check:has(input:checked){background:rgba(99,200,208,.06);border-color:#507f8b;color:var(--paper)}.check input{accent-color:var(--cyan);width:15px;height:15px;margin:0;flex:none}.progress-foot{margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:15px}.progress-foot p{font-size:11px;color:var(--muted)}.plain-button{background:none;border:0;text-decoration:underline;text-underline-offset:4px;font-size:11px;color:#91b3bf;padding:8px}.guide{margin:45px 0 0;padding:25px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:244px 1fr;gap:32px}.guide-label{font:12px var(--mono);letter-spacing:2px;color:var(--orange)}.guide h3{font-size:16px;margin-bottom:13px}.guide-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}.guide-grid strong{font-size:12px;display:block;margin-bottom:5px}.guide-grid p{font-size:11px;color:var(--muted)}.guide details{margin-top:20px;font-size:12px;color:#b9cdd4}.guide summary{cursor:pointer;display:inline-list-item}.rubric{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:15px}.rubric div{padding:15px;border:1px solid var(--line);border-radius:6px;font-size:11px}.rubric strong{display:block;color:var(--paper);margin-bottom:4px}.rubric-note{color:var(--muted);font-size:11px;margin-top:12px}footer{padding:28px 0 32px;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:#73929f;font:10px var(--mono);letter-spacing:1px;gap:20px}.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);padding:12px 20px;background:var(--paper);color:var(--ink);border-radius:8px;box-shadow:0 12px 40px rgba(0,0,0,.3);z-index:10;font-size:12px;max-width:90vw}.copy-dialog{background:var(--paper);color:var(--ink);padding:24px;border:0;border-radius:10px;width:min(90vw,700px)}.copy-dialog::backdrop{background:rgba(0,0,0,.65)}.copy-dialog h3{font-size:16px;margin-bottom:10px}.copy-dialog textarea{width:100%;height:240px;padding:12px;line-height:1.7;font-family:var(--body);resize:vertical}.copy-dialog .btn{margin-top:12px;border-color:#9ab5c0;color:var(--ink)}
+@media(min-width:1300px){.hero{padding-right:45px}.pass-stage{margin-left:15px}}@media(max-width:1100px){.frame{padding:0 35px}.lab,.guide{grid-template-columns:205px minmax(0,1fr);gap:24px}.brand-sub{display:none}.hero{gap:20px}.pass{width:310px}.orbit{width:360px}.float-label{right:-5px}.preview-body{padding:20px}}@media(max-width:800px){.frame{padding:0 24px}.hero{grid-template-columns:1fr;gap:10px;padding:45px 0 36px}.hero-desc{max-width:100%}h1{font-size:53px}.pass-stage{height:290px;margin:20px 0 0}.pass{width:315px;min-height:240px}.pass-code{font-size:52px;margin-top:24px}.float-label{right:12px;bottom:0}.top{height:73px}.brand{font-size:20px}.top-right .text-link{display:none}.lab{grid-template-columns:1fr;gap:24px}.roles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.role{padding:14px;min-height:104px}.role-title{font-size:16px}.role p{display:none}.role-top small{font-size:9px}.role-top{margin-bottom:12px}.side-tip{display:none}.mission-head h2{font-size:25px}.section-top{align-items:start}.section-top h2{font-size:23px}.guide{grid-template-columns:1fr;gap:16px}.guide-grid{gap:14px}.hero-notes{gap:14px}.orbit{max-width:100%}.mission-toolbar{margin-bottom:20px}.mission-badge{font-size:10px}.below{gap:16px}.panel{padding:18px}.guide{margin-top:30px}}@media(max-width:480px){.frame{padding:0 18px}.brand{font-size:18px;gap:9px;letter-spacing:2px}.brand-mark{gap:3px}.top-right{gap:0}.top-right .tag{font-size:10px;padding:4px 8px}h1{font-size:44px;letter-spacing:-1px}.hero-desc{font-size:13px}.hero-actions{gap:9px}.hero-actions .btn{font-size:12px;padding:10px 12px}.hero-notes{font-size:10px;gap:12px}.pass-stage{height:270px}.pass{width:280px;padding:22px;min-height:230px}.pass-code{font-size:47px}.pass-title{font-size:12px}.pass-top{font-size:8px}.pass-bottom{margin-top:19px}.float-label{font-size:10px;padding:10px 12px;right:0;bottom:0}.float-label strong{font-size:11px}.float-label small{font-size:9px}.orbit{width:310px;height:225px}.orbit.second{width:280px;height:250px}.section-top{margin-bottom:19px}.section-top p{font-size:10px}.roles{gap:7px}.role{padding:12px;min-height:94px}.role-title{font-size:15px}.role-title svg{width:13px}.role-top small{letter-spacing:0;font-size:8px}.role-top svg{width:17px}.mission-head{gap:8px}.mission-head h2{font-size:23px}.mission-badge{padding:5px 7px;font-size:9px}.mission-desc{font-size:12px}.mission-toolbar{gap:8px}.mission-toolbar .btn{font-size:11px;padding:9px 10px}.preview-top{padding:11px 13px}.preview-top>span{font-size:9px}.window-label{font-size:9px;letter-spacing:0}.window-dots{gap:3px;margin-right:8px}.preview-body{padding:17px 13px}.preview-intro h3{font-size:16px}.preview-counter{font-size:10px}.record-list{grid-template-columns:1fr}.record:last-child:nth-child(odd){grid-column:auto}.record p{min-height:0}.record{padding:15px}.below{grid-template-columns:1fr}.checks{grid-template-columns:1fr}.progress-panel{padding:18px}.guide-grid,.rubric{grid-template-columns:1fr;gap:12px}.guide-grid div{padding-bottom:10px;border-bottom:1px solid var(--line)}footer{font-size:9px;letter-spacing:0;flex-direction:column;gap:6px}.progress-foot{align-items:start}.progress-foot p{max-width:220px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.pass{transform:rotate(-5deg)}}
+@media(max-width:480px){.section-top{flex-direction:column;gap:6px}.section-top h2{font-size:23px}.pass-bottom .bars{display:none}.pass-bottom small{font-size:8px;letter-spacing:1px;white-space:nowrap}.pass-bottom>div:first-child{width:100%}.pass-bottom span{font-size:9px!important}.progress-foot{flex-direction:column;gap:5px}.progress-foot p{max-width:100%}.plain-button{white-space:nowrap}.filter{min-height:40px}}
+@media print{body{background:white;color:#112b3c}.frame{padding:0}.top{height:60px}.hero,.roles,.mission-toolbar,.filters,.progress-panel,.guide-label,.toast,.top-right,.brand-sub,.hero-actions{display:none!important}.lab,.guide{display:block}.preview,.panel,.record{background:white;border-color:#b3c9d0;color:#112b3c}.mission-desc,.record p,.record-meta,.record details div,.requirements li,.review-points li,.guide-grid p,.preview-intro p,.preview-note{color:#315868}.record-list{display:block}.record{break-inside:avoid;margin-bottom:10px}.below{display:block}.panel{margin-top:15px}.preview-top,.mission-badge{color:#315868}.guide details{color:#315868}footer{color:#315868}.record details{border-color:#b3c9d0}.record summary{color:#315868}details>div{display:block!important}}
+</style>
+</head>
+<body>
+<div class="frame">
+<header class="top"><div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>INNDEAVOR<span class="brand-sub">CODEX / FIELD LAB</span></div><div class="top-right"><a class="text-link" href="#guide">交付与评阅 <span data-icon="arrow"></span></a><span class="tag"><span class="dot"></span>内部培训 · 交互样稿</span></div></header>
+<section class="hero" aria-labelledby="hero-title">
+<div><div class="eyebrow">CODEX 实战挑战</div><h1 id="hero-title">你的第一位<br><span>AI 工作搭档。</span></h1><p class="hero-desc">从日常客户沟通、事务准备和利润管理开始，完成一次自己的岗位实操。选岗位、领取素材，用 Codex 做出一份清楚、可用、经过核查的成果。</p><div class="hero-actions"><a class="btn btn-primary" href="#lab">选择我的挑战 <span data-icon="arrow"></span></a><a class="btn" href="https://www.xiaohongshu.com/discovery/item/6a080fda000000003502d325" target="_blank" rel="noopener">观看培训视频 <span data-icon="play"></span></a></div><div class="hero-notes"><span><span data-icon="check"></span>每人一个岗位挑战</span><span><span data-icon="check"></span>使用模拟或脱敏资料</span><span><span data-icon="check"></span>自己核查成果</span></div></div>
+<div class="pass-stage" aria-hidden="true"><div class="orbit"></div><div class="orbit second"></div><div class="pass"><div class="pass-top"><span>INNDEAVOR / FIELD PASS</span><span class="pass-stamp">PRACTICE</span></div><div class="pass-code" id="pass-code">SALES</div><div class="pass-title" id="pass-title">销售 · 客户话术</div><div class="pass-bottom"><div><small>YOUR FIRST CODEX CHALLENGE</small><br><span style="font:11px var(--mono);color:#c1d8de">REAL WORK → 1 CLEAR RESULT</span></div><div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div><div class="float-label"><span data-icon="pointer"></span><div><strong>把答案，变成可用的成果</strong><small>读取资料 · 生成成果 · 修改 · 核查</small></div></div></div>
+</section>
+<div class="section-top"><h2>选一个岗位，开始实战。</h2><p>每人在本岗位选一项，完成即可。</p></div>
+<main class="lab" id="lab">
+<nav class="roles" aria-label="岗位选择">
+<button class="role" data-role="sales" aria-pressed="true"><span class="role-top"><small>SALES / 客户沟通</small><span data-icon="people"></span></span><span class="role-title">销售<span data-icon="arrow"></span></span><p>话术、周边、地图、图片四选一</p></button>
+<button class="role" data-role="cm" aria-pressed="false"><span class="role-top"><small>CM / 事务准备</small><span data-icon="wrench"></span></span><span class="role-title">CM<span data-icon="arrow"></span></span><p>催租沟通或事务准备二选一</p></button>
+<button class="role" data-role="manager" aria-pressed="false"><span class="role-top"><small>MANAGER / 利润管理</small><span data-icon="briefcase"></span></span><span class="role-title">店长<span data-icon="arrow"></span></span><p>分析经营结果，提出改进建议</p></button>
+<div class="side-tip"><div class="tiny-line"></div><strong>不需要先学写代码</strong>用自己的话交代任务。看结果、提修改，再确认每条信息有依据。</div>
+</nav>
+<section class="mission" aria-live="polite" aria-atomic="false">
+<div class="mission-head"><div><div class="mission-kicker" id="mission-kicker">销售挑战</div><h2 id="mission-title">客户话术</h2><p class="mission-desc" id="mission-desc"></p></div><span class="mission-badge">建议实操约 30 分钟</span></div>
+<p id="choice-note" style="font-size:12px;color:var(--muted);margin-bottom:9px">选一个任务，每人只做一项。</p><div class="filters" id="task-options" aria-label="选择一个实操任务"></div>
+<div class="mission-toolbar"><button class="btn btn-white" id="download-material"><span data-icon="download"></span>下载练习素材</button><button class="btn" id="copy-task"><span data-icon="copy"></span>复制任务要求</button><button class="btn" id="download-template"><span data-icon="file"></span>下载交付说明模板</button></div>
+<div class="preview"><div class="preview-top"><div class="window-label"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>任务预览 / 可点击</div><span>模拟素材 / 任务说明</span></div><div class="preview-body"><div class="preview-intro"><div><h3 id="preview-title"></h3><p>点选筛选，展开查看素材原文。</p></div><span class="preview-counter" id="record-count"></span></div><div class="filters" id="filters" aria-label="练习记录筛选"></div><div class="record-list" id="records"></div><p class="preview-note"><span data-icon="info"></span>真实地图或房源原图需使用获准素材；没有素材时可选其他销售题。</p></div></div>
+<div class="below"><section class="panel"><h3><span data-icon="list"></span>你的成果需要包含</h3><ul class="requirements" id="requirements"></ul></section><section class="panel"><h3><span data-icon="shield"></span>交付前，自己核对</h3><ul class="review-points" id="review-points"></ul><div class="boundary" id="boundary"></div></section></div>
+<section class="progress-panel"><div class="progress-top"><h3>我的交付自查</h3><span class="progress-value" id="progress-value">0 / 4</span></div><div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div><div class="checks"><label class="check"><input type="checkbox" data-step="0">已领取并读懂练习素材</label><label class="check"><input type="checkbox" data-step="1">已生成可打开的成果文件</label><label class="check"><input type="checkbox" data-step="2">已提出并落实一次具体修改</label><label class="check"><input type="checkbox" data-step="3">已核查原记录并整理交付说明</label></div><div class="progress-foot"><p id="progress-note">勾选只记录你的自查进度，合格由负责人评阅。</p><button class="plain-button" id="reset-progress">重置本题自查</button></div></section>
+</section>
+</main>
+<section class="guide" id="guide"><div class="guide-label">HANDOFF / 交付</div><div><h3>交给负责人这三样，就够了。</h3><div class="guide-grid"><div><strong>一个成果文件</strong><p>所选题目的话术、图文、地图、图片、准备清单或分析报告，保留来源和待确认事项。</p></div><div><strong>一次具体修改的证据</strong><p>首次指令与修改指令的截图或文字，附必要回复片段。</p></div><div><strong>两三句话的核查说明</strong><p>说明核对了什么、修改了什么、哪些信息还待确认。</p></div></div><details id="review-guide"><summary>负责人如何判断通过</summary><div class="rubric"><div><strong>资料准确</strong>事实、金额、位置、图片特征及来源与素材对应，未知事项明确标注。</div><div><strong>成果可用</strong>文件能打开，结构清楚，能用于指定工作场景。</div><div><strong>会修改、会核查</strong>具体调整已落实，员工能说明自己实际核查了哪些内容。</div></div><p class="rubric-note">三项均达到基本要求即通过，允许修改后重交。不按排版精美程度或提示词长短排名。建议先让 1—2 位同事试做，再确定正式用时。</p></details></div></section>
+<footer><span>INNDEAVOR · CODEX FIELD LAB</span><span>培训样稿 / 模拟演示 · 新题待试做</span></footer>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+<dialog class="copy-dialog" id="copy-dialog"><h3>复制任务要求</h3><p style="font-size:12px;margin-bottom:10px">当前浏览器未允许自动复制，可以手动复制下面的文字。</p><textarea id="copy-text" readonly aria-label="任务要求全文"></textarea><button class="btn" id="close-dialog">关闭</button></dialog>
+<script>
+// Inline SVG paths from Lucide icons; no external assets are required.
+const icons={arrow:'<path d="M7 17 17 7M7 7h10v10"/>',people:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/><circle cx="9" cy="7" r="4"/>',wrench:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/>',briefcase:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V3H8v18M2 12h20"/>',check:'<path d="m20 6-11 11-5-5"/>',download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>',copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M8 13h8M8 17h6"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',shield:'<path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/>',info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',pointer:'<path d="m4 3 7.07 17 2.51-6.42L20 11.07 4 3zM13.5 13.5l5 5"/>',play:'<circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/>'};
+function icon(name){return '<svg viewBox="0 0 24 24" aria-hidden="true">'+(icons[name]||icons.info)+'</svg>'}
+document.querySelectorAll('[data-icon]').forEach(el=>el.innerHTML=icon(el.dataset.icon));
+const data={
+  "sales": {
+    "name": "销售",
+    "code": "SALES",
+    "tasks": {
+      "talk": {
+        "label": "客户话术",
+        "title": "写一段客户愿意读的房源介绍",
+        "desc": "根据房源资料和客户需求，写一段可以用于聊天的房源介绍话术。销售四选一，每人只做自己最常用的一题。",
+        "format": "一份话术文档或可复制的聊天文字",
+        "needs": [
+          "说明客户关心的房型、价格、家具和适合点，约 150—250 字。",
+          "写出自然的下一步，例如邀请客户补充需求或确认看房安排。",
+          "内容以素材为依据，未知事项写待确认，并落实一次具体修改。"
+        ],
+        "reviews": [
+          "周租、户型、家具与原资料一致，没有编造优惠或可入住日。",
+          "话术回应客户的具体需求，表达清楚，不堆砌宣传词。",
+          "一次修改有明确目的，例如更简洁、更口语或更适合该客户。"
+        ],
+        "boundary": "房源和周边均为模拟练习信息。价格、可入住日期或优惠未确认时，不作对客承诺。",
+        "filters": [
+          [
+            "all",
+            "全部素材"
+          ],
+          [
+            "info",
+            "房源信息"
+          ],
+          [
+            "pending",
+            "待确认"
+          ]
+        ],
+        "records": [
+          {
+            "id": "A",
+            "title": "房源概况",
+            "status": "模拟信息",
+            "type": "info",
+            "desc": "示例房源 A：两房一卫，带家具。",
+            "owner": "资料：房源介绍",
+            "due": "只用于培训",
+            "raw": "房源概况：示例房源 A 为两房一卫，带家具；所有房源信息均为模拟，不对应真实挂牌。"
+          },
+          {
+            "id": "B",
+            "title": "报价与入住",
+            "status": "入住日待确认",
+            "type": "info",
+            "pending": true,
+            "desc": "报价 AUD 650/周，可入住日期尚未确认。",
+            "owner": "币种：AUD",
+            "due": "周租：650",
+            "raw": "报价与入住：模拟报价 AUD 650/周；可入住日期尚未确认；押金、包含费用和优惠信息未提供，不能自行承诺。"
+          },
+          {
+            "id": "C",
+            "title": "客户需求",
+            "status": "已给定需求",
+            "type": "info",
+            "desc": "两位上班族，希望带家具、交通便利，预算 AUD 700/周以内。",
+            "owner": "对象：模拟客户",
+            "due": "需求优先",
+            "raw": "客户需求：两位上班族，希望带家具、交通便利，预算 AUD 700/周以内；尚未提出确定的看房时间。"
+          },
+          {
+            "id": "D",
+            "title": "周边介绍",
+            "status": "模拟信息",
+            "type": "info",
+            "desc": "模拟清单包含车站 B、超市 C；没有距离与路线依据。",
+            "owner": "素材：周边清单",
+            "due": "距离未提供",
+            "raw": "周边介绍：模拟周边清单包含车站 B、超市 C；没有真实地图、距离或通勤时间依据，不得写成步行几分钟或真实地点推荐。"
+          },
+          {
+            "id": "E",
+            "title": "沟通目标",
+            "status": "待安排",
+            "type": "pending",
+            "desc": "先解释适合点，再询问客户方便的看房时间。",
+            "owner": "产出：聊天草稿",
+            "due": "看房时间待确认",
+            "raw": "沟通目标：先回应预算、家具和交通需求，再询问客户方便的看房时间；没有确定预约，不得写成已安排看房。"
+          }
+        ]
+      },
+      "area": {
+        "label": "周边介绍",
+        "title": "做一份客户看得懂的周边介绍",
+        "desc": "选一套有资料的房源，把交通、购物和生活设施整理成一份简短的客户介绍。可以使用现有经核实的周边清单；缺少依据的内容明确留待确认。",
+        "format": "一页图文或一份简短周边介绍文档",
+        "needs": [
+          "围绕交通、购物和生活设施整理，回应客户的日常需要。",
+          "设施名称、信息来源和查询日期可追溯；真实地点自行查询后再使用。",
+          "距离和时间有依据才写，明确步行或驾车等方式，并落实一次修改。"
+        ],
+        "reviews": [
+          "设施和位置有来源，模拟名称没有被包装成真实地点。",
+          "距离、路线及时间与同一出行方式对应，未查到的内容标待确认。",
+          "介绍适合客户阅读，保留来源或地图截图。"
+        ],
+        "boundary": "以下清单为模拟文字练习。对真实房源做介绍时，换成已核实的地址与周边资料。",
+        "filters": [
+          [
+            "all",
+            "全部素材"
+          ],
+          [
+            "info",
+            "介绍信息"
+          ],
+          [
+            "pending",
+            "待补资料"
+          ]
+        ],
+        "records": [
+          {
+            "id": "A",
+            "title": "客户关心什么",
+            "status": "已给定需求",
+            "type": "info",
+            "desc": "上班族关注公共交通、超市和日常生活便利。",
+            "owner": "对象：模拟客户",
+            "due": "介绍围绕需求",
+            "raw": "客户关心什么：模拟客户为上班族，关注公共交通、超市及日常生活便利；介绍应围绕这些需要。"
+          },
+          {
+            "id": "B",
+            "title": "交通素材",
+            "status": "模拟名称",
+            "type": "info",
+            "desc": "练习清单给出车站 B，未给真实地址和通勤时间。",
+            "owner": "素材：交通清单",
+            "due": "时间待确认",
+            "raw": "交通素材：练习清单给出模拟车站 B；没有真实地址、路线或通勤时间，只能作为练习名称，不得推断真实交通条件。"
+          },
+          {
+            "id": "C",
+            "title": "购物素材",
+            "status": "模拟名称",
+            "type": "info",
+            "desc": "练习清单给出超市 C，未给营业时间和距离。",
+            "owner": "素材：购物清单",
+            "due": "距离待确认",
+            "raw": "购物素材：练习清单给出模拟超市 C；没有真实地点、营业时间或距离资料，未核实的信息应标为待确认。"
+          },
+          {
+            "id": "D",
+            "title": "生活素材",
+            "status": "模拟名称",
+            "type": "info",
+            "desc": "练习清单给出公园 D，可按分类展示。",
+            "owner": "素材：生活清单",
+            "due": "只用于培训",
+            "raw": "生活素材：练习清单给出模拟公园 D；可用于练习分类和表达，不对应真实公园或实际设施条件。"
+          },
+          {
+            "id": "E",
+            "title": "真实资料入口",
+            "status": "待补资料",
+            "type": "pending",
+            "desc": "真实题可复用已确认的房源地址、周边清单或地图截图。",
+            "owner": "来源：已有资料",
+            "due": "标注查询日期",
+            "raw": "真实资料入口：若要做真实周边介绍，复用获准使用的真实房源地址、经核实的周边清单或地图截图；保留来源和查询日期，未查到的信息不得补成事实。"
+          }
+        ]
+      },
+      "map": {
+        "label": "地图标注",
+        "title": "做一张方便客户理解位置的地图",
+        "desc": "使用获准使用的真实房源地址与地图截图，标出房源和客户关心的周边地点。没有真实地址或截图时，选择其他销售题。",
+        "format": "一张标注后的地图图片或一页地图文档",
+        "needs": [
+          "在真实地图截图上标出房源、交通和生活设施，图例清楚。",
+          "写明地图来源、查询日期；有距离时标明测量方式。",
+          "保留原截图，标注图能够核对，并落实一次具体修改。"
+        ],
+        "reviews": [
+          "房源位置和设施与真实地址、原地图对应，不能定位模拟地址。",
+          "截图来源和必要标识得到保留，示意图明确标为示意。",
+          "标注清楚，没有编造路径、距离或通勤时间。"
+        ],
+        "boundary": "地图题需要员工或负责人提供获准使用的真实地址、截图。模拟房源 A 不能拿来定位。",
+        "filters": [
+          [
+            "all",
+            "全部素材"
+          ],
+          [
+            "info",
+            "任务说明"
+          ],
+          [
+            "pending",
+            "待补素材"
+          ]
+        ],
+        "records": [
+          {
+            "id": "A",
+            "title": "房源位置",
+            "status": "待补素材",
+            "type": "pending",
+            "desc": "使用已确认、获准用于培训的真实房源地址。",
+            "owner": "来源：房源资料",
+            "due": "不可用虚构地址",
+            "raw": "房源位置：本页未提供真实房源地址。请使用已有且获准用于培训的真实地址；不得把示例房源 A 或虚构地址定位到真实地图。"
+          },
+          {
+            "id": "B",
+            "title": "原始地图",
+            "status": "待补素材",
+            "type": "pending",
+            "desc": "获取对应地址的地图截图，保留来源与查询日期。",
+            "owner": "素材：原截图",
+            "due": "需保留原件",
+            "raw": "原始地图：员工或负责人提供对应真实地址的地图截图，保留地图来源、必要标识和查询日期；本页没有附真实地图。"
+          },
+          {
+            "id": "C",
+            "title": "标注范围",
+            "status": "任务说明",
+            "type": "info",
+            "desc": "标出房源、一个交通点和一个生活设施。",
+            "owner": "目标：客户易读",
+            "due": "无需堆满地图",
+            "raw": "标注范围：标出房源、一个客户相关的交通点和一个生活设施；设施必须能在原地图或其他可靠资料中核对。"
+          },
+          {
+            "id": "D",
+            "title": "距离与路线",
+            "status": "任务说明",
+            "type": "info",
+            "desc": "只有核实后才写距离、路线与时间。",
+            "owner": "说明：出行方式",
+            "due": "未知写待确认",
+            "raw": "距离与路线：有依据才写距离或时间，并说明步行、驾车或公共交通等出行方式；没有测量依据则不写或标待确认。"
+          },
+          {
+            "id": "E",
+            "title": "交付与修改",
+            "status": "任务说明",
+            "type": "info",
+            "desc": "原截图与标注图一起保留，检查位置是否准确。",
+            "owner": "产出：标注图",
+            "due": "一项实操",
+            "raw": "交付与修改：保留原地图截图和标注后的图片，提出一次具体修改，例如调整标签位置或图例，核对房源点及周边点没有错位。"
+          }
+        ]
+      },
+      "photo": {
+        "label": "房源图片优化",
+        "title": "把一张房源照片处理得清楚好看",
+        "desc": "选一张获准使用的真实房源照片，让 Codex 帮你改善亮度、裁切、倾斜或标注。没有可用原图时，选择其他销售题。",
+        "format": "原图、优化后的图片和一句修改说明",
+        "needs": [
+          "选择一张原图，明确本次要改善的一个问题。",
+          "改善曝光、裁切、倾斜或标注等呈现，保持真实房屋特征。",
+          "提交前后对照，说明改了什么，并落实一次具体修改。"
+        ],
+        "reviews": [
+          "优化图可与原图对照，房型、设施、窗景和缺陷没有被虚构或抹掉。",
+          "客户更容易看清图片，文字标注准确，照片可正常打开。",
+          "仅使用获准使用的素材和当前可用工具，修改说明与实际变化一致。"
+        ],
+        "boundary": "图片优化应改善呈现；不能增加不存在的设施、改变户型或隐藏会影响客户判断的问题。",
+        "filters": [
+          [
+            "all",
+            "全部素材"
+          ],
+          [
+            "info",
+            "处理要求"
+          ],
+          [
+            "pending",
+            "待补原图"
+          ]
+        ],
+        "records": [
+          {
+            "id": "A",
+            "title": "房源原图",
+            "status": "待补原图",
+            "type": "pending",
+            "desc": "员工或负责人提供一张获准使用的真实照片。",
+            "owner": "来源：已有照片",
+            "due": "保留原图",
+            "raw": "房源原图：本页未附真实房源照片；员工或负责人提供一张获准使用的照片，并保留未经修改的原图。没有原图时选其他题。"
+          },
+          {
+            "id": "B",
+            "title": "本次处理目标",
+            "status": "处理要求",
+            "type": "info",
+            "desc": "亮度、裁切、倾斜或标注，选择一个具体问题。",
+            "owner": "目标：清楚易读",
+            "due": "控制改动范围",
+            "raw": "本次处理目标：选择改善亮度、裁切、倾斜或文字标注中的一个具体问题，不要求重做整套房源图片。"
+          },
+          {
+            "id": "C",
+            "title": "真实特征",
+            "status": "处理要求",
+            "type": "info",
+            "desc": "保留房屋结构、已有设施和实际窗景。",
+            "owner": "核对：原图",
+            "due": "不添加虚构物件",
+            "raw": "真实特征：不得增加不存在的家具或设施、改变房屋结构和窗景，也不得隐藏会影响客户判断的真实问题。"
+          },
+          {
+            "id": "D",
+            "title": "工具条件",
+            "status": "处理要求",
+            "type": "info",
+            "desc": "使用当前已获准且可用的工具完成练习。",
+            "owner": "来源：现有工具",
+            "due": "不要求新付费服务",
+            "raw": "工具条件：使用当前账号已经获准且可用的工具完成练习，不要求新购买服务或连接新的业务账号。"
+          },
+          {
+            "id": "E",
+            "title": "前后对照",
+            "status": "处理要求",
+            "type": "info",
+            "desc": "交付前检查，原图和优化图能对应。",
+            "owner": "产出：前后对照",
+            "due": "说明实际改动",
+            "raw": "前后对照：提交原图、优化图和一句实际修改说明；完成首版后提出一次具体调整，并核查房源真实特征保持一致。"
+          }
+        ]
+      }
+    }
+  },
+  "cm": {
+    "name": "CM",
+    "code": "CM",
+    "tasks": {
+      "rent": {
+        "label": "催租与付款核对",
+        "title": "写一份准确、得体的催租沟通草稿",
+        "desc": "根据账单与财务核对资料，准备一条给租客的租金提醒或付款核对回复。CM 两选一，每人只做一项，完成草稿后由负责人审阅。",
+        "format": "一份沟通草稿及简短核查说明",
+        "needs": [
+          "清楚说明对应账期、核对截至时间和已核实的欠款情况。",
+          "针对付款截图待核实的情况，写清还需核对什么，避免重复催缴。",
+          "表达礼貌、具体；不自行加费用或承诺延期，并落实一次修改。"
+        ],
+        "reviews": [
+          "账期、应付、已核实收款和剩余欠款对应原资料。",
+          "付款截图与实际到账分开，未核实金额没有直接冲销。",
+          "草稿不含新编的收款账户、费用或处置承诺，核查步骤清楚。"
+        ],
+        "boundary": "本题只准备草稿，不发送。付款截图和付款承诺不能直接视为已到账。",
+        "filters": [
+          [
+            "all",
+            "全部素材"
+          ],
+          [
+            "info",
+            "账单与到账"
+          ],
+          [
+            "pending",
+            "待核实"
+          ]
+        ],
+        "records": [
+          {
+            "id": "A",
+            "title": "账单信息",
+            "status": "已给定账单",
+            "type": "info",
+            "desc": "模拟租客 A：账期 9 月 25 日至 10 月 1 日，应付 AUD 650。",
+            "owner": "费用类型：房租",
+            "due": "到期日：10 月 2 日",
+            "raw": "账单信息：模拟租客 A 的房租账期为 2026-09-25 至 2026-10-01；应付 AUD 650，到期日 2026-10-02。所有租客及金额均为培训模拟。"
+          },
+          {
+            "id": "B",
+            "title": "财务核对",
+            "status": "已核实到账",
+            "type": "info",
+            "desc": "截至 10 月 8 日 10:00，已核实收款 AUD 200，账面剩余 AUD 450。",
+            "owner": "依据：财务核对",
+            "due": "截至：10 月 8 日 10:00",
+            "raw": "财务核对：截至 2026-10-08 10:00，财务已核实收款 AUD 200；账面剩余欠款为 AUD 450，未包含尚未核实到账的截图金额。"
+          },
+          {
+            "id": "C",
+            "title": "付款截图",
+            "status": "到账待核实",
+            "type": "pending",
+            "desc": "租客提供 AUD 300 的付款截图，尚未核实到账。",
+            "owner": "依据：租客截图",
+            "due": "不能直接冲销",
+            "raw": "付款截图：租客在财务核对后提供一张 AUD 300 的付款截图，但该笔是否到账尚未核实；不能直接将剩余欠款从 AUD 450 改成 AUD 150，也不能要求对已付款部分重复缴纳。"
+          },
+          {
+            "id": "D",
+            "title": "租客表示",
+            "status": "仅为付款承诺",
+            "type": "pending",
+            "desc": "租客说会在 10 月 9 日处理余款，没有批准延期的记录。",
+            "owner": "来源：租客陈述",
+            "due": "延期未批准",
+            "raw": "租客表示：租客说会在 2026-10-09 处理余款；这只是付款承诺，尚无已批准延期的记录，也不证明已付款。"
+          },
+          {
+            "id": "E",
+            "title": "待核实资料",
+            "status": "待核实",
+            "type": "pending",
+            "desc": "向租客核对转账时间、付款备注，再请财务确认到账。",
+            "owner": "下一步：付款核对",
+            "due": "草稿待负责人审阅",
+            "raw": "待核实资料：准备沟通草稿，向租客核对转账时间与付款备注，并请财务核实截图款项是否到账；未提供的收款账户、滞纳费用和处置规则不得自行补写。"
+          }
+        ]
+      },
+      "prep": {
+        "label": "事务准备",
+        "title": "把一项日常事务准备清楚",
+        "desc": "选入住、退租或查房等一项日常事务，沿用已有流程整理所需资料、人员、时间和待确认事项。下方以入住准备为模拟案例。",
+        "format": "一份事务准备清单",
+        "needs": [
+          "按已有流程整理这项事务的准备事项，明确资料、负责人和时间。",
+          "区分已确认、待办理和待核实，缺少依据不能标完成。",
+          "说明还需向谁核实什么，完成一次具体修改。"
+        ],
+        "reviews": [
+          "计划入住日期、实际入住、钥匙交接和到账状态没有混用。",
+          "付款截图没有当到账，钥匙待交接没有写成已交接。",
+          "清单能用于实际准备，未知责任人或时间有标注，没有自行新增审批规则。"
+        ],
+        "boundary": "本题是事务准备，不是宣布整个流程已完成。沿用现有办理流程，缺少资料明确待确认。",
+        "filters": [
+          [
+            "all",
+            "全部素材"
+          ],
+          [
+            "info",
+            "已给定信息"
+          ],
+          [
+            "pending",
+            "待准备 / 待核实"
+          ]
+        ],
+        "records": [
+          {
+            "id": "A",
+            "title": "入住安排",
+            "status": "日期待确认",
+            "type": "pending",
+            "desc": "模拟房源 A 计划 10 月 12 日入住，具体时间尚未确认。",
+            "owner": "负责人：CM 小林",
+            "due": "计划：10 月 12 日",
+            "raw": "入住安排：模拟房源 A 计划于 2026-10-12 入住，具体时间尚未确认；负责 CM 为小林。计划日期不是实际入住事实。"
+          },
+          {
+            "id": "B",
+            "title": "合同资料",
+            "status": "已签署并上传",
+            "type": "info",
+            "desc": "合同已签署并上传，准备清单保留合同资料入口。",
+            "owner": "依据：合同记录",
+            "due": "已提供",
+            "raw": "合同资料：该模拟入住的合同已签署并上传，已有合同资料入口；此事实不能替代押金到账或钥匙交接等其他事项。"
+          },
+          {
+            "id": "C",
+            "title": "押金凭据",
+            "status": "到账待核实",
+            "type": "pending",
+            "desc": "租客已给付款截图，财务尚未确认押金到账。",
+            "owner": "待核实：财务",
+            "due": "尚未确认到账",
+            "raw": "押金凭据：租客已提供押金付款截图，但财务尚未确认到账；准备清单应保留核实事项，不能把截图记成到账。"
+          },
+          {
+            "id": "D",
+            "title": "钥匙安排",
+            "status": "待交接",
+            "type": "pending",
+            "desc": "负责 Admin 为小王，交接时间待确认，无交接照片。",
+            "owner": "负责人：Admin 小王",
+            "due": "交接时间待确认",
+            "raw": "钥匙安排：钥匙尚未交接，负责 Admin 为小王；交接时间未确认，也未提供交接照片，不能标为已交接。"
+          },
+          {
+            "id": "E",
+            "title": "家具与配套",
+            "status": "待准备 / 待核实",
+            "type": "pending",
+            "desc": "一件家具待维修；水电气网和入住查房安排尚未给出。",
+            "owner": "家具负责人：小陈",
+            "due": "其余人员与时间待确认",
+            "raw": "家具与配套：一件家具需要维修，负责人小陈，维修时间未确认；水电气网及入住查房安排资料未给出，应按原入住流程列为待核实，不得直接省略或自行宣布完成。"
+          }
+        ]
+      }
+    }
+  },
+  "manager": {
+    "name": "店长",
+    "code": "MANAGER",
+    "tasks": {
+      "profit": {
+        "label": "利润管理",
+        "title": "找到影响利润的原因，提出下一步",
+        "desc": "根据同一报告周的模拟经营资料，计算并解释管理经营结果，找出主要影响因素，提出两条具体的改进建议。",
+        "format": "一页利润管理分析，附可复算的计算过程",
+        "needs": [
+          "按给定口径计算本周长租租金差、空置持有成本和管理经营结果。",
+          "解释哪个因素影响最大，欠租另列为收款风险，不重复扣减。",
+          "提出两条具体建议，注明需核实的数据、确认人和如何验证效果，并落实一次修改。"
+        ],
+        "reviews": [
+          "同一周期、同一币种计算，有效周租和实际周租成本没有混用。",
+          "空置成本没有重复扣，欠租没有再从经营结果扣一次。",
+          "结果标明管理经营口径，未当成净利润；建议与已执行动作分开。"
+        ],
+        "boundary": "管理经营结果不是公司净利润或现金回款。本例只练习长租租金差和空置持有成本，不含 Airbnb、店支出、利息及其他会计调整。",
+        "filters": [
+          [
+            "all",
+            "全部素材"
+          ],
+          [
+            "info",
+            "经营数据"
+          ],
+          [
+            "pending",
+            "收款风险"
+          ]
+        ],
+        "records": [
+          {
+            "id": "A",
+            "title": "报告周与口径",
+            "status": "给定练习口径",
+            "type": "info",
+            "desc": "10 月 2 日至 10 月 8 日，AUD；管理经营结果＝长租租金差－空置持有成本。",
+            "owner": "周期：周五至周四",
+            "due": "模拟经营练习",
+            "raw": "报告周与口径：2026-10-02 至 2026-10-08（周五至周四），币种 AUD；本例所有有效租金和成本全周不变。长租租金差＝每个有效长租日的（租客有效周租－实际周租成本）/7之和；管理经营结果＝长租租金差－空置日持有成本。本例不含 Airbnb、店支出、利息及其他会计调整，不得称公司净利润。"
+          },
+          {
+            "id": "B",
+            "title": "租赁单元 R01",
+            "status": "长租 7 天",
+            "type": "info",
+            "desc": "租客有效周租 AUD 700，实际周租成本 AUD 560。",
+            "owner": "状态：全周长租",
+            "due": "7 天 / 成本不变",
+            "raw": "租赁单元 R01：本报告周 7 天均为有效长租日；租客有效周租 AUD 700，实际周租成本 AUD 560，均已按给定合同净额口径处理，全周不变。"
+          },
+          {
+            "id": "C",
+            "title": "租赁单元 R02",
+            "status": "长租 7 天",
+            "type": "info",
+            "desc": "租客有效周租 AUD 630，实际周租成本 AUD 560。",
+            "owner": "状态：全周长租",
+            "due": "7 天 / 成本不变",
+            "raw": "租赁单元 R02：本报告周 7 天均为有效长租日；租客有效周租 AUD 630，实际周租成本 AUD 560，均已按给定合同净额口径处理，全周不变。"
+          },
+          {
+            "id": "D",
+            "title": "租赁单元 R03",
+            "status": "空置 7 天",
+            "type": "info",
+            "desc": "全周空置，实际周租成本 AUD 350，不产生长租收入。",
+            "owner": "状态：全周空置",
+            "due": "7 天 / 成本不变",
+            "raw": "租赁单元 R03：本报告周 7 天均为空置日，不产生长租收入；实际周租成本 AUD 350，全周不变。只计空置持有成本，不再把这笔成本重复算进长租租金差。"
+          },
+          {
+            "id": "E",
+            "title": "R02 收款核对",
+            "status": "收款风险另列",
+            "type": "pending",
+            "desc": "净应收 AUD 630，已核实收到 AUD 420，未收 AUD 210。",
+            "owner": "经营与收款分开",
+            "due": "未收：AUD 210",
+            "raw": "R02 收款核对：本报告周净应收租金 AUD 630，财务已核实收款 AUD 420，未收 AUD 210；收款风险单列，不能再直接从上述管理经营结果重复扣除 AUD 210。是否影响未来经营或会计处理需另行核实。"
+          }
+        ]
+      }
+    }
+  }
+};
+
+let activeRole='sales',activeTask='talk',activeFilter='all',toastTimer;
+const stateKey='inndeavor-codex-field-lab-v2';
+let progress={};try{progress=JSON.parse(localStorage.getItem(stateKey)||'{}');if(!progress||typeof progress!=='object'||Array.isArray(progress))progress={}}catch{progress={}}
+function activeData(){return {...data[activeRole],...data[activeRole].tasks[activeTask]}}
+function progressId(){return activeRole+':'+activeTask}
+function escapeText(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function visibleRecords(){return activeData().records.filter(r=>activeFilter==='all'||r.type===activeFilter||(activeFilter==='pending'&&r.pending))}
+function renderRecords(){const d=activeData(),records=visibleRecords();document.getElementById('record-count').textContent=records.length+' / '+d.records.length+' 条素材';document.getElementById('records').innerHTML=records.map(r=>'<article class="record" data-record-id="'+escapeText(r.id)+'"><div class="record-head"><h4>'+escapeText(r.title)+'</h4><span class="status '+(r.type==='done'?'done':(r.type==='pending'||r.pending||r.type==='coord')?'ask':'')+'">'+escapeText(r.status)+'</span></div><p>'+escapeText(r.desc)+'</p><div class="record-meta"><span>'+escapeText(r.owner)+'</span><span>'+escapeText(r.due)+'</span></div><details><summary>展开素材原文 · 素材 '+escapeText(r.id)+'</summary><div><span class="source-label">练习素材 / ITEM '+escapeText(r.id)+'</span><br>'+escapeText(r.raw)+'</div></details></article>').join('');document.querySelectorAll('[data-filter]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.filter===activeFilter)))}
+function renderProgress(){const checks=Array.isArray(progress[progressId()])?progress[progressId()]:[];document.querySelectorAll('[data-step]').forEach(el=>el.checked=checks[Number(el.dataset.step)]===true);const count=checks.slice(0,4).filter(x=>x===true).length;document.getElementById('progress-value').textContent=count+' / 4';document.getElementById('progress-bar').style.width=(count*25)+'%';document.getElementById('progress-note').textContent=count===4?'本题自查已完成，请整理成果交给负责人评阅。':'勾选只记录本题的自查进度，合格由负责人评阅。'}
+function renderRole(){const d=activeData(),tasks=Object.entries(data[activeRole].tasks);document.querySelectorAll('[data-role]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.role===activeRole)));document.getElementById('pass-code').textContent=d.code;document.getElementById('pass-title').textContent=d.name+' · '+d.label;document.getElementById('mission-kicker').textContent=d.name+'挑战 · 每人一项';document.getElementById('mission-title').textContent=d.title;document.getElementById('mission-desc').textContent=d.desc;document.getElementById('preview-title').textContent='本题练习素材';document.getElementById('choice-note').textContent=tasks.length>1?'选一个最贴近日常工作的方向，'+tasks.length+'选1。':'本岗位完成下方利润管理题。';document.getElementById('task-options').innerHTML=tasks.map(([key,t])=>'<button class="filter" data-task="'+key+'" aria-pressed="'+(key===activeTask)+'">'+escapeText(t.label)+'</button>').join('');document.getElementById('requirements').innerHTML=d.needs.map((x,i)=>'<li><span>0'+(i+1)+'</span>'+escapeText(x)+'</li>').join('');document.getElementById('review-points').innerHTML=d.reviews.map(x=>'<li>'+icon('check')+escapeText(x)+'</li>').join('');document.getElementById('boundary').textContent=d.boundary;document.getElementById('filters').innerHTML=d.filters.map(([key,label])=>'<button class="filter" data-filter="'+key+'" aria-pressed="'+(key===activeFilter)+'">'+escapeText(label)+'</button>').join('');renderRecords();renderProgress()}
+function notify(message){const el=document.getElementById('toast');el.textContent=message;el.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.hidden=true,3400)}
+function download(name,content,type='text/plain;charset=utf-8'){const url=URL.createObjectURL(new Blob(['\ufeff',content],{type}));const link=document.createElement('a');link.href=url;link.download=name;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);notify('下载已发起：'+name)}
+function taskText(){const d=activeData();return 'INNDEAVOR Codex 实战挑战：'+d.name+' / '+d.label+'\n\n每人在本岗位选择一项，不要求全部完成。\n\n任务：'+d.desc+'\n\n交付形式：'+d.format+'\n\n成果要求：\n'+d.needs.map((x,i)=>(i+1)+'. '+x).join('\n')+'\n\n请保留原素材；沿用现有表头、数值、状态含义和业务口径。地图和图片须有获准使用的真实素材，没有素材可选其他销售题。\n\n核查重点：\n'+d.reviews.map(x=>'- '+x).join('\n')+'\n'+d.boundary+'\n\n完成首版后，请提出并落实一次具体修改。\n\n提交：成果文件；首次与修改指令的截图或文字；两三句话的核查说明。\n\n练习素材与任务说明：\n'+d.records.map((r,i)=>(i+1)+'. '+r.raw).join('\n')}
+document.querySelectorAll('[data-role]').forEach(el=>el.addEventListener('click',()=>{activeRole=el.dataset.role;activeTask=Object.keys(data[activeRole].tasks)[0];activeFilter='all';renderRole()}));
+document.getElementById('task-options').addEventListener('click',event=>{const button=event.target.closest('[data-task]');if(!button)return;activeTask=button.dataset.task;activeFilter='all';renderRole()});
+document.getElementById('filters').addEventListener('click',event=>{const button=event.target.closest('[data-filter]');if(!button)return;activeFilter=button.dataset.filter;renderRecords()});
+document.querySelectorAll('[data-step]').forEach(el=>el.addEventListener('change',()=>{progress[progressId()]=Array.from(document.querySelectorAll('[data-step]'),input=>input.checked);try{localStorage.setItem(stateKey,JSON.stringify(progress))}catch{notify('浏览器未允许保存，自查进度仅保留在本次打开期间。')}renderProgress()}));
+document.getElementById('reset-progress').addEventListener('click',()=>{progress[progressId()]=[false,false,false,false];try{localStorage.setItem(stateKey,JSON.stringify(progress))}catch{}renderProgress();notify('已重置'+activeData().label+'的自查进度')});
+document.getElementById('download-material').addEventListener('click',()=>{const d=activeData();download('INNDEAVOR_'+d.name+'_'+d.label+'_练习素材.txt','以下为模拟练习素材与任务说明。真实地图或房源原图未随文字附上，需使用已有获准素材。\n\n'+d.records.map((r,i)=>(i+1)+'. '+r.raw).join('\n'))});
+document.getElementById('download-template').addEventListener('click',()=>{const d=activeData();download('INNDEAVOR_'+d.name+'_'+d.label+'_交付说明.md','# '+d.name+' · '+d.label+'\n\n姓名：\n所选题目：'+d.title+'\n成果文件名：\n素材来源：\n\n## 首次任务指令\n（粘贴指令或附截图）\n\n## 一次具体修改\n修改要求：\n修改后的实际变化：\n\n## 我的核查\n我对照原资料核对了：\n仍待确认的信息：\n\n评阅状态：待负责人评阅\n')});
+document.getElementById('copy-task').addEventListener('click',async()=>{const text=taskText();try{if(!navigator.clipboard)throw new Error('Clipboard unavailable');await navigator.clipboard.writeText(text);notify('所选任务已复制，可以粘贴到 Codex。')}catch{document.getElementById('copy-text').value=text;document.getElementById('copy-dialog').showModal();document.getElementById('copy-text').focus();document.getElementById('copy-text').select()}});
+document.getElementById('close-dialog').addEventListener('click',()=>document.getElementById('copy-dialog').close());
+renderRole();
+</script>
+</body>
+</html>
